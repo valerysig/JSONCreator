@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="JSONCreator.Views.OutpuListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JSONCreator.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <!--Words-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   Content="Words"/>
+        </Grid>
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Words}"
+                  IsReadOnly="True"/>
+        
+        <!--Sentences-->
+        <Label Grid.Row="2"
+               Content="Sentences"/>
+        <DataGrid Grid.Row="3"
+                  ItemsSource="{Binding Sentences}"
+                  IsReadOnly="True"/>
+                  
+        <!-- Saving words -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   Content="Browse:"/>
+            <TextBox Grid.Column="1"
+                     Text="{Binding FilePath}"
+                     IsReadOnly="True"/>
+            <Button Grid.Column="2"
+                    Content="Browse"
+                    Command="{Binding OpenBrowsingDialogCmd}"/>
+            <Button Grid.Column="3"
+                    Content="Save"
+                    Command="{Binding SaveFileCmd}"/>
+        </Grid>
+        
+    </Grid>
+</UserControl>
