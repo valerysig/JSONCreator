@@ -30,11 +30,23 @@
         
         <!--The text fields-->
         <TextBox Grid.Row="0" Grid.Column="1"
-                 Text="{Binding ChineseTextBox, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding ChineseTextBox, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding Path=PendingAddBtn}" Key="Enter" />
+            </TextBox.InputBindings>
+        </TextBox>
         <TextBox Grid.Row="1" Grid.Column="1"
-                 Text="{Binding PinYinTextBox, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding PinYinTextBox, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding Path=PendingAddBtn}" Key="Enter" />
+            </TextBox.InputBindings>
+        </TextBox>
         <TextBox Grid.Row="2" Grid.Column="1"
-                 Text="{Binding EnglishTextBox, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding EnglishTextBox, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding Path=PendingAddBtn}" Key="Enter" />
+            </TextBox.InputBindings>
+        </TextBox>
         
         <!--Buttons-->
         <Grid Grid.Row="3" Grid.ColumnSpan="2">
@@ -64,8 +76,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Remove"
-                                    Command="{Binding RemoveFromList}"
-                                    CommandParameter="{Binding CurrItem}"/>
+                                    Command="{Binding
+                                        RelativeSource={RelativeSource AncestorType=DataGrid},
+                                        Path=DataContext.DeleteCurrentWord}"
+                                        CommandParameter="{Binding}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

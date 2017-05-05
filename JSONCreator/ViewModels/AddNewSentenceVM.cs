@@ -1,10 +1,6 @@
 ﻿using JSONCreator.AuxiliaryClasses;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace JSONCreator.ViewModels
@@ -15,6 +11,8 @@ namespace JSONCreator.ViewModels
         private string _ChineseTextBox;
         private string _EnglishTextBox;
         private ObservableCollection<Sentence> _InputedSentences;
+
+        private ICommand _RemoveCurrentSentenceCmd;
 
         private ICommand _AddToListCmd;
         private ICommand _ClearInputsCmd;
@@ -32,7 +30,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _ChineseTextBox = value;
-                OnPropertyChanged("ChineseTextBox");
+                OnPropertyChanged(nameof(ChineseTextBox));
             }
         }
         public string EnglishTextBox
@@ -44,7 +42,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _EnglishTextBox = value;
-                OnPropertyChanged("EnglishTextBox");
+                OnPropertyChanged(nameof(EnglishTextBox));
             }
         }
         public ObservableCollection<Sentence> InputedSentences
@@ -56,7 +54,20 @@ namespace JSONCreator.ViewModels
             set
             {
                 _InputedSentences = value;
-                OnPropertyChanged("InputedSentences");
+                OnPropertyChanged(nameof(InputedSentences));
+            }
+        }
+
+        public ICommand RemoveCurrentSentenceCmd
+        {
+            get
+            {
+                return _RemoveCurrentSentenceCmd;
+            }
+            set
+            {
+                _RemoveCurrentSentenceCmd = value;
+                OnPropertyChanged(nameof(RemoveCurrentSentenceCmd));
             }
         }
 
@@ -69,7 +80,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _AddToListCmd = value;
-                OnPropertyChanged("AddToList");
+                OnPropertyChanged(nameof(AddToList));
             }
         }
         public ICommand ClearInputsCmd
@@ -81,7 +92,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _ClearInputsCmd = value;
-                OnPropertyChanged("ClearInputs");
+                OnPropertyChanged(nameof(ClearInputs));
             }
         }
         public ICommand AddSentencesCmd
@@ -93,7 +104,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _AddSentencesCmd = value;
-                OnPropertyChanged("AddSentences");
+                OnPropertyChanged(nameof(AddSentences));
             }
         }
         public ICommand ClearListCmd
@@ -105,7 +116,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _ClearListCmd = value;
-                OnPropertyChanged("ClearList");
+                OnPropertyChanged(nameof(ClearListCmd));
             }
         }
         #endregion
@@ -117,14 +128,26 @@ namespace JSONCreator.ViewModels
             ClearInputs();
 
             //Init the Commands
+            RemoveCurrentSentenceCmd = new RelayCommand<Sentence>(RemoveCurrentSentence);
+
             AddToListCmd = new RelayCommand(AddToList, AddToListPossible);
             ClearInputsCmd = new RelayCommand(ClearInputs, ClearInputsPossible);
             AddSentencesCmd = new RelayCommand(AddSentences, AddSentencesPossible);
             ClearListCmd = new RelayCommand(ClearList, ClearListPossible);
         }
+
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Removes the selected sentence
+        /// </summary>
+        /// <param name="currentSentence">The sentence to be removed</param>
+        private void RemoveCurrentSentence(Sentence currentSentence)
+        {
+            InputedSentences.Remove(currentSentence);
+        }
+
         /// <summary>
         /// Adds the inputed sentence to the List, and clears the inputs
         /// </summary>

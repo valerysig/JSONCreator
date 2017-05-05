@@ -2,10 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace JSONCreator.ViewModels
@@ -17,6 +13,8 @@ namespace JSONCreator.ViewModels
         private String _PinYinTextBox;
         private String _EnglishTextBox;
         private ObservableCollection<Word> _WordsPending;
+
+        private ICommand _DeleteCurrentWord;
 
         private ICommand _PendingAddBtn;
         private ICommand _PendingClearBtn;
@@ -35,7 +33,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _ChineseTextBox = value;
-                OnPropertyChanged("ChineseTextBox");
+                OnPropertyChanged(nameof(ChineseTextBox));
             }
         }
         public String PinYinTextBox
@@ -47,7 +45,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _PinYinTextBox = value;
-                OnPropertyChanged("PinYinTextBox");
+                OnPropertyChanged(nameof(PinYinTextBox));
             }
         }
         public String EnglishTextBox
@@ -59,7 +57,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _EnglishTextBox = value;
-                OnPropertyChanged("EnglishTextBox");
+                OnPropertyChanged(nameof(EnglishTextBox));
             }
         }
         public ObservableCollection<Word> WordsPending
@@ -72,7 +70,21 @@ namespace JSONCreator.ViewModels
             set
             {
                 _WordsPending = value;
-                OnPropertyChanged("WordsPending");
+                OnPropertyChanged(nameof(WordsPending));
+            }
+        }
+
+        public ICommand DeleteCurrentWord
+        {
+            get
+            {
+                return _DeleteCurrentWord;
+            }
+
+            set
+            {
+                _DeleteCurrentWord = value;
+                OnPropertyChanged(nameof(DeleteCurrentWord));
             }
         }
 
@@ -85,7 +97,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _PendingAddBtn = value;
-                OnPropertyChanged("PendingAddBtn");
+                OnPropertyChanged(nameof(PendingAddBtn));
             }
         }
         public ICommand PendingClearBtn
@@ -97,7 +109,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _PendingClearBtn = value;
-                OnPropertyChanged("PendingClearBtn");
+                OnPropertyChanged(nameof(PendingClearBtn));
             }
         }
         public ICommand AddBtn
@@ -109,7 +121,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _AddBtn = value;
-                OnPropertyChanged("AddBtn");
+                OnPropertyChanged(nameof(AddBtn));
             }
         }
         public ICommand ClearBtn {
@@ -120,7 +132,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _ClearBtn = value;
-                OnPropertyChanged("ClearBtn");
+                OnPropertyChanged(nameof(ClearBtn));
             }
         }
         public ICommand AddToDBBtn {
@@ -131,7 +143,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _AddToDBBtn = value;
-                OnPropertyChanged("AddToDBBtn");
+                OnPropertyChanged(nameof(ClearBtn));
             }
         }
         #endregion
@@ -142,6 +154,8 @@ namespace JSONCreator.ViewModels
             ClearInput();
             ClearList();
 
+            DeleteCurrentWord = new RelayCommand<Word>(DeleteCurrentWordCmd);
+
             PendingAddBtn = new RelayCommand(AddWord, AddWordPossible);
             PendingClearBtn = new RelayCommand(ClearInput, ClearInputPossible);
             AddBtn = new RelayCommand(AddAllWords, AddAllWordsPossible);
@@ -151,6 +165,15 @@ namespace JSONCreator.ViewModels
         #endregion
 
         #region Command Methods
+
+        /// <summary>
+        /// Removes the word from the WordsPendingCollection
+        /// </summary>
+        /// <param name="currentWord">The word to be removed</param>
+        private void DeleteCurrentWordCmd(Word currentWord)
+        {
+            WordsPending.Remove(currentWord);
+        }
         /// <summary>
         /// Adds a new word to the pending list and clears the input
         /// </summary>

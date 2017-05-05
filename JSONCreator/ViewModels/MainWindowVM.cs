@@ -1,10 +1,5 @@
 ﻿using JSONCreator.AuxiliaryClasses;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace JSONCreator.ViewModels
@@ -25,7 +20,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _PreviewTaClicked = value;
-                OnPropertyChanged("PreviewTaClicked");
+                OnPropertyChanged(nameof(PreviewTaClicked));
             }
         }
         #endregion

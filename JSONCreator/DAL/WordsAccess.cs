@@ -75,12 +75,13 @@ namespace JSONCreator.DAL
         /// Stores the given words in the DB
         /// </summary>
         /// <param name="newWords">A list of words to be stored</param>
-        public void SaveWords(List<Word> newWords)
+        async public void SaveWords(List<Word> newWords)
         {
             using (var db = new ChineseAppEntities())
             {
                 db.Words.AddRange(newWords);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                //db.SaveChanges();
             }
         }
         #endregion

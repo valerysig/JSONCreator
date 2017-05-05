@@ -17,12 +17,11 @@ namespace JSONCreator.ViewModels
         private ObservableCollection<Word> _Words;
         private ObservableCollection<Sentence> _Sentences;
 
-        private ICommand _RefreshCmd;
         private ICommand _OpenBrowsingDialogCmd;
         private ICommand _SaveFileCmd;
         #endregion
 
-        #region Propertiespublic 
+        #region Properties 
         public string FilePath
         {
             get
@@ -32,7 +31,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _FilePath = value;
-                OnPropertyChanged("FilePath");
+                OnPropertyChanged(nameof(FilePath));
             }
         }
         public ObservableCollection<Word> Words {
@@ -43,7 +42,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _Words = value;
-                OnPropertyChanged("Words");
+                OnPropertyChanged(nameof(Words));
             }
         }
         public ObservableCollection<Sentence> Sentences
@@ -55,7 +54,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _Sentences = value;
-                OnPropertyChanged("Sentences");
+                OnPropertyChanged(nameof(Sentences));
             }
         }
 
@@ -68,7 +67,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _OpenBrowsingDialogCmd = value;
-                OnPropertyChanged("OpenBrowsingDialogCmd");
+                OnPropertyChanged(nameof(OpenBrowsingDialogCmd));
             }
         }
         public ICommand SaveFileCmd
@@ -80,7 +79,7 @@ namespace JSONCreator.ViewModels
             set
             {
                 _SaveFileCmd = value;
-                OnPropertyChanged("SaveFileCmd");
+                OnPropertyChanged(nameof(SaveFileCmd));
             }
         }
         #endregion
@@ -120,7 +119,6 @@ namespace JSONCreator.ViewModels
                 B = "sdfads"
             });
 
-            //TODO : find out where to import this thing from
             string json = JsonConvert.SerializeObject(someShit.ToArray());
 
             System.IO.File.WriteAllText(FilePath, json);
@@ -138,6 +136,7 @@ namespace JSONCreator.ViewModels
     }
 }
 
+//TODO: Delete this shit once the output is ready
 class data
 {
     public int A { get; set; }
